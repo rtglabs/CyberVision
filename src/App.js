@@ -5,7 +5,7 @@ import CameraView from './CameraView';
 import ControlPanel from './ControlPanel';
 import theme from './theme'; // Make sure you create this theme file
 
-const socket = io('http://88.53.197.250:80');
+const socket = io('http://your-robot-car-ip:port');
 
 const AppContainer = styled.div`
   color: ${props => props.theme.colors.text};
