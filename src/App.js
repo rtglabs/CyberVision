@@ -42,6 +42,8 @@ const Footer = styled.footer`
 `;
 
 const App = () => {
+  const streamUrl = "http://172.16.213.140:8080/hls/stream.m3u8";
+  
   return (
     <ThemeProvider theme={theme}>
       <AppContainer>
@@ -50,7 +52,7 @@ const App = () => {
           <SignalStrength />
         </Header>
         <MainContent>
-          <CameraView streamUrl="http://172.16.213.140:8080/hls/stream.m3u8" />
+          <CameraView streamUrl={streamUrl} />
           <PointCloudMap />
           <GPSUnit />
         </MainContent>
