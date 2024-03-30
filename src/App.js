@@ -1,5 +1,5 @@
 // App.js
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import CameraView from './CameraView';
 import PointCloudMap from './PointCloudMap';
@@ -9,6 +9,7 @@ import WeaponsControl from './WeaponsControl';
 import RoverControl from './RoverControl';
 import Logs from './Logs';
 import theme from './theme';
+import RobotWebSocket from './webClient';
 
 const AppContainer = styled.div`
   display: grid;
@@ -55,6 +56,7 @@ const App = () => {
           <CameraView streamUrl={streamUrl} />
           <PointCloudMap />
           <GPSUnit />
+          <RobotWebSocket />
         </MainContent>
         <Footer>
           <WeaponsControl />
