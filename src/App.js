@@ -50,7 +50,7 @@ const App = () => {
           <SignalStrength />
         </Header>
         <MainContent>
-          <CameraView streamUrl="http://88.53.197.250/axis-cgi/mjpg/video.cgi?resolution=320x240" />
+          <CameraView streamUrl="http://172.16.213.140:8080/hls/stream.m3u8" />
           <PointCloudMap />
           <GPSUnit />
         </MainContent>
