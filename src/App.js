@@ -43,7 +43,7 @@ const Footer = styled.footer`
 `;
 
 const App = () => {
-  const streamUrl = "http://172.16.213.140:8080/hls/stream.m3u8";
+  const streamUrl = "http://10.6.0.1/hls/stream.m3u8";
   
   return (
     <ThemeProvider theme={theme}>
