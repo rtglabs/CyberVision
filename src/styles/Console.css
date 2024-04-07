@@ -1,0 +1,87 @@
+.console-container {
+    position: relative;
+    background-color: rgb(45, 51, 59);
+    width: 400px;
+    height: 230px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+
+
+/* --------------------- CONSOLE HEADER --------------------- */
+
+.console-header {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 100%;
+    height: 20px;
+    background-color: rgb(65, 65, 72);
+    border-radius: 10px 10px 0px 0px;
+}
+
+.console-header ul {
+    position: absolute;
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+    height: 100%;
+}
+
+.window-control {
+    display: inline-block;
+    margin: 0px 2px;
+}
+
+#dot-exit {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgb(250, 75, 75);
+    margin-left: 3px;
+}
+
+#dot-minimize {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgb(246, 196, 15);
+}
+
+#dot-fullscreen {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgb(18, 188, 21);
+}
+
+
+
+/* --------------------- INPUT FORM --------------------- */
+
+.usr-input-form {
+    position: absolute;
+    bottom: 10px;
+    width: inherit;
+}
+
+.usr-input-label {
+    color:rgb(162, 167, 180);
+    display: inline-flex;
+    float: left;
+    width: 100%;
+}
+
+#usr-input {
+    color: rgb(199, 197, 208);
+    background-color: black;
+    background-color: transparent;
+    border: transparent;
+    outline: 0px;
+    width: 100%;
+    padding-right: 10px;
+}

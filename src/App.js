@@ -7,7 +7,7 @@ import GPSUnit from './GPSUnit';
 import SignalStrength from './SignalStrength';
 import WeaponsControl from './WeaponsControl';
 import RoverControl from './RoverControl';
-import Logs from './Logs';
+import Console from './Console';
 import theme from './theme';
 import RobotWebSocket from './webClient';
 
@@ -61,7 +61,7 @@ const App = () => {
         <Footer>
           <WeaponsControl />
           <RoverControl />
-          <Logs />
+          <Console />
         </Footer>
       </AppContainer>
     </ThemeProvider>
