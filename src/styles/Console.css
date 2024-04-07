@@ -63,6 +63,15 @@
 
 /* --------------------- INPUT FORM --------------------- */
 
+.console-logs {
+    position: absolute;
+    bottom: 30px;
+}
+
+
+
+/* --------------------- INPUT FORM --------------------- */
+
 .usr-input-form {
     position: absolute;
     bottom: 10px;
@@ -70,18 +79,36 @@
 }
 
 .usr-input-label {
+    position: absolute;
     color:rgb(162, 167, 180);
     display: inline-flex;
-    float: left;
-    width: 100%;
+    max-width: 100%;
+    bottom: 10px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 #usr-input {
     color: rgb(199, 197, 208);
-    background-color: black;
     background-color: transparent;
     border: transparent;
     outline: 0px;
-    width: 100%;
     padding-right: 10px;
+    overflow: hidden;
+}
+
+#cursor {
+    position: relative;
+    right: 10px;
+    width: 10px;
+    height: 18px;
+    pointer-events: none;
+}
+
+.blink {
+    background-color: #a1bbc3;
+}
+
+.blink-stop {
+    background-color: transparent;
 }

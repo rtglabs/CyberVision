@@ -12,7 +12,26 @@ const LogContainer = styled.div`
 `;
 
 export default function Terminal(){
-    const [log, setLog] = useState([]);
+    const [logs, setLog] = useState([]);
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        const cursorElem = document.getElementById("cursor");
+        cursorElem.className = cursorElem.className == "blink" ? "blink-stop" : "blink";
+      }, 650);
+      return () => {
+        clearInterval(interval);
+      };
+    }, []);
+
+    const handleKeyDown = (event) => {
+      const usrInput = document.getElementById('usr-input');
+      if(event.key == "Enter"){
+        event.preventDefault();
+        setLog(prevLog => [...prevLog, usrInput.innerHTML]);
+        usrInput.innerHTML = '';
+      }
+    };
 
 
     return (
@@ -24,12 +43,18 @@ export default function Terminal(){
                 <li className='window-control'><span id="dot-fullscreen"></span></li>
               </ul>
             </div>
-            <form className="usr-input-form">
-                <label className="usr-input-label">
-                    <span>cybervision:~$ </span>
-                    <input id="usr-input" type="text"/>
-                </label>
-            </form>
+
+            <div className='console-logs'>
+              {logs.map(log => (
+                <div key={log.id}>{log}</div>
+              ))}
+            </div>
+
+            <div className="usr-input-label">
+              <span>cybervision:~$ </span>
+              <span id="usr-input" contenteditable="true" onKeyDown={handleKeyDown}></span>
+              <span id='cursor'></span>
+            </div>
         </div>
     )
 }
