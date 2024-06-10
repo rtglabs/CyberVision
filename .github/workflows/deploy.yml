@@ -1,9 +1,9 @@
-name: Deploy to AWS EC2
+name: Deploy to AWS CodeDeploy
 
 on:
   push:
     branches:
-      - main  # Change this to your branch name if different
+      - main  # Adjust if your main branch is named differently
 
 jobs:
   deploy:
@@ -13,14 +13,34 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Deploy to EC2
-      uses: appleboy/ssh-action@master
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
       with:
-        host: ${{ secrets.HOST }}  # Ensure this is set to your EC2 instance's public IP
-        username: ubuntu  # Default username for Ubuntu EC2 instances
-        key: ${{ secrets.SSH_KEY }}  # Reference the SSH key secret
-        script: |
-          ssh -v -i ~/.ssh/id_ed25519 ubuntu@18.118.229.52  # Add verbose flag
-          cd /var/www/cybervision  # Change to your application directory
-          git pull origin main  # Pull the latest code
-          sudo systemctl restart nginx  # Restart Nginx to apply changes
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run build
+      run: npm run build
+
+    - name: Deploy to AWS S3
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        zip -r latest.zip .
+        aws s3 cp latest.zip s3://cybervision-deployments/latest.zip  # Replace with your S3 bucket name
+
+    - name: Deploy to AWS CodeDeploy
+      uses: aws-actions/aws-codedeploy-github-actions@v0.0.4
+      with:
+        application-name: CyberVision  # Replace with your CodeDeploy application name
+        deployment-group-name: CyberVisionDeploymentGroup  # Replace with your CodeDeploy deployment group name
+        deployment-config-name: CodeDeployDefault.AllAtOnce
+        bundle-bucket: cybervision-deployments  # Replace with your S3 bucket name
+        bundle-key: latest.zip
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: us-east-2
