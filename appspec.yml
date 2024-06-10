@@ -2,7 +2,7 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /var/www/yourapplication
+    destination: /var/www/cybervision
 hooks:
   AfterInstall:
     - location: scripts/restart_server.sh
