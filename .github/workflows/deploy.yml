@@ -3,11 +3,12 @@ name: Deploy to AWS EC2
 on:
   push:
     branches:
-      - main  # Set this to your default branch
+      - main  # Change this to your branch name if different
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -15,10 +16,11 @@ jobs:
     - name: Deploy to EC2
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.HOST }}
-        username: ubuntu
-        key: ${{ secrets.SSH_KEY }}
+        host: ${{ secrets.HOST }}  # Ensure this is set to your EC2 instance's public IP
+        username: ubuntu  # Default username for Ubuntu EC2 instances
+        key: ${{ secrets.SSH_KEY }}  # Reference the SSH key secret
         script: |
-          cd /var/www/cybervision
-          git pull origin main
-          sudo systemctl restart nginx
+          ssh -v -i ~/.ssh/id_ed25519 ubuntu@18.118.229.52  # Add verbose flag
+          cd /var/www/cybervision  # Change to your application directory
+          git pull origin main  # Pull the latest code
+          sudo systemctl restart nginx  # Restart Nginx to apply changes
