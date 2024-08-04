@@ -1,5 +1,5 @@
 // App.js
-import React, { useState } from 'react';
+import React from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import CameraView from './CameraView';
 import PointCloudMap from './PointCloudMap';
@@ -8,8 +8,9 @@ import SignalStrength from './SignalStrength';
 import WeaponsControl from './WeaponsControl';
 import RoverControl from './RoverControl';
 import Console from './Console';
+import ControlPanel from './ControlPanel';
 import theme from './theme';
-import RobotWebSocket from './webClient';
+import { WebSocketProvider } from './RobotWebSocket';
 
 const AppContainer = styled.div`
   display: grid;
@@ -44,26 +45,30 @@ const Footer = styled.footer`
 
 const App = () => {
   const streamUrl = "http://10.6.0.1/hls/stream.m3u8";
-  
+
+  console.log("Rendering App");
+
   return (
     <ThemeProvider theme={theme}>
-      <AppContainer>
-        <Header>
-          <div>CyberVision</div>
-          <SignalStrength />
-        </Header>
-        <MainContent>
-          <CameraView streamUrl={streamUrl} />
-          <PointCloudMap />
-          <GPSUnit />
-          <RobotWebSocket />
-        </MainContent>
-        <Footer>
-          <WeaponsControl />
-          <RoverControl />
-          <Console />
-        </Footer>
-      </AppContainer>
+      <WebSocketProvider>
+        <AppContainer>
+          <Header>
+            <div>CyberVision</div>
+            <SignalStrength />
+          </Header>
+          <MainContent>
+            <CameraView streamUrl={streamUrl} />
+            <PointCloudMap />
+            <GPSUnit />
+            <RoverControl />
+            <ControlPanel /> {/* Include ControlPanel */}
+          </MainContent>
+          <Footer>
+            <WeaponsControl />
+            <Console />
+          </Footer>
+        </AppContainer>
+      </WebSocketProvider>
     </ThemeProvider>
   );
 };
