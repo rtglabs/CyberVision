@@ -7,8 +7,8 @@ const WebSocketProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const ws = new WebSocket('ws://18.118.229.52:8765');
-    
+    const ws = new WebSocket('wss://ronteg.com/ws');  // Use wss:// for secure WebSocket
+
     ws.onopen = () => {
       console.log('WebSocket connection established');
     };
