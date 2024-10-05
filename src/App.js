@@ -20,6 +20,7 @@ const AppContainer = styled.div`
   padding: 20px;
   color: ${props => props.theme.colors.text};
   background-color: ${props => props.theme.colors.background};
+  min-height: 100vh;
 `;
 
 const Header = styled.header`
@@ -60,13 +61,11 @@ const App = () => {
             <CameraView streamUrl={streamUrl} />
             <PointCloudMap />
             <GPSUnit />
-            <RoverControl />
-            <ControlPanel /> {/* Include ControlPanel */}
-          </MainContent>
-          <Footer>
             <WeaponsControl />
+            <ControlPanel />
             <Console />
-          </Footer>
+          </MainContent>
+          <Footer />
         </AppContainer>
       </WebSocketProvider>
     </ThemeProvider>
