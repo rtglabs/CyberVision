@@ -1,6 +1,10 @@
 // App.js
 import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
+import { AuthProvider } from './AuthContext';
+import Login from './Login';
+import PrivateRoute from './PrivateRoute';
 import CameraView from './CameraView';
 import PointCloudMap from './PointCloudMap';
 import GPSUnit from './GPSUnit';
@@ -51,23 +55,37 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <WebSocketProvider>
-        <AppContainer>
-          <Header>
-            <div>CyberVision</div>
-            <SignalStrength />
-          </Header>
-          <MainContent>
-            <CameraView streamUrl={streamUrl} />
-            <PointCloudMap />
-            <GPSUnit />
-            <WeaponsControl />
-            <ControlPanel />
-            <Console />
-          </MainContent>
-          <Footer />
-        </AppContainer>
-      </WebSocketProvider>
+      <AuthProvider>
+        <WebSocketProvider>
+          <Router>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/*"
+                element={
+                  <PrivateRoute>
+                    <AppContainer>
+                      <Header>
+                        <div>CyberVision</div>
+                        <SignalStrength />
+                      </Header>
+                      <MainContent>
+                        <CameraView streamUrl={streamUrl} />
+                        <PointCloudMap />
+                        <GPSUnit />
+                        <WeaponsControl />
+                        <ControlPanel />
+                        <Console />
+                      </MainContent>
+                      <Footer />
+                    </AppContainer>
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </Router>
+        </WebSocketProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 };
