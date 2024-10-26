@@ -10,7 +10,6 @@ import PointCloudMap from './PointCloudMap';
 import GPSUnit from './GPSUnit';
 import SignalStrength from './SignalStrength';
 import WeaponsControl from './WeaponsControl';
-import RoverControl from './RoverControl';
 import Console from './Console';
 import ControlPanel from './ControlPanel';
 import theme from './theme';
