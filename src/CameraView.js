@@ -1,57 +1,66 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import styled, { keyframes } from 'styled-components';
 
-const VideoWrapper = styled.div`
-  width: 100%; // Set the width as per your requirement
-  height: auto; // Set the height as per your requirement
-  box-shadow: 0 0 10px ${props => props.theme.colors.accent};
-  video {
-    width: 100%;
-    height: auto;
-  }
+// Animation for the pixel rover moving
+const moveRover = keyframes`
+  0% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+  100% { transform: translateX(0); }
 `;
 
-const CameraView = ({ streamUrl }) => {
-  const [isWebcamActive, setIsWebcamActive] = useState(true); // Track if the webcam is being used
-  const videoRef = useRef(null);
+// Styled components for the animation and wrapper
+const VideoWrapper = styled.div`
+  width: 100%; 
+  height: 300px; 
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid ${props => props.theme.colors.accent};
+  box-shadow: 0 0 10px ${props => props.theme.colors.accent};
+`;
+
+const RoverAnimation = styled.div`
+  width: 80px;
+  height: 80px;
+  background-image: url('/path/to/pixel-rover.png'); // Replace with your rover image path
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: ${moveRover} 2s infinite linear;
+`;
+
+const TelemetryData = styled.div`
+  color: limegreen;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  margin-top: 20px;
+  text-align: center;
+`;
+
+const CameraView = () => {
+  const [speed, setSpeed] = useState(0);
+  const [temperature, setTemperature] = useState(0);
 
   useEffect(() => {
-    // Try to access the user's webcam
-    const startWebcam = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream; // Set the video element's source to the webcam stream
-          setIsWebcamActive(true); // Webcam feed active
-        }
-      } catch (err) {
-        console.error('Failed to access webcam: ', err);
-        setIsWebcamActive(false); // Fallback to camera stream if webcam access fails
-      }
-    };
+    // Simulate telemetry updates
+    const updateTelemetry = setInterval(() => {
+      setSpeed(Math.floor(Math.random() * 10) + 1); // Random speed between 1 and 10
+      setTemperature(Math.floor(Math.random() * 40) + 10); // Random temperature between 10 and 50
+    }, 2000);
 
-    startWebcam();
-
-    return () => {
-      if (videoRef.current && videoRef.current.srcObject) {
-        // Stop webcam stream when component is unmounted
-        const stream = videoRef.current.srcObject;
-        const tracks = stream.getTracks();
-        tracks.forEach(track => track.stop());
-      }
-    };
+    return () => clearInterval(updateTelemetry);
   }, []);
 
   return (
     <VideoWrapper>
-      {isWebcamActive ? (
-        <video ref={videoRef} autoPlay muted /> // User's webcam feed
-      ) : (
-        <video controls autoPlay>
-          <source src={streamUrl} type="application/x-mpegURL" />
-          Your browser does not support the video tag.
-        </video> // Fallback to stream if webcam is not accessible
-      )}
+      <div>
+        <RoverAnimation />
+        <TelemetryData>
+          <p>Speed: {speed} km/h</p>
+          <p>Temperature: {temperature}°C</p>
+          <p>Mission Status: Nominal</p>
+        </TelemetryData>
+      </div>
     </VideoWrapper>
   );
 };

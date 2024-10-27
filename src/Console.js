@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import "./styles/Console.css"
-import styled from 'styled-components';
+//import styled from 'styled-components';
 
-const LogContainer = styled.div`
-  background: ${props => props.theme.colors.background};
-  color: ${props => props.theme.colors.text};
-  padding: 10px;
-  overflow-y: auto; // If you expect many logs, make the container scrollable
-  height: 200px; // Adjust height as needed
-  border: 1px solid ${props => props.theme.colors.primary}; // Optional: adds a styled border
-`;
+// const LogContainer = styled.div`
+//   background: ${props => props.theme.colors.background};
+//   color: ${props => props.theme.colors.text};
+//   padding: 10px;
+//   overflow-y: auto; // If you expect many logs, make the container scrollable
+//   height: 200px; // Adjust height as needed
+//   border: 1px solid ${props => props.theme.colors.primary}; // Optional: adds a styled border
+// `;
 
 export default function Terminal(){
     const [logs, setLog] = useState([]);
@@ -17,7 +17,7 @@ export default function Terminal(){
     useEffect(() => {
       const interval = setInterval(() => {
         const cursorElem = document.getElementById("cursor");
-        cursorElem.className = cursorElem.className == "blink" ? "blink-stop" : "blink";
+        cursorElem.className = cursorElem.className === "blink" ? "blink-stop" : "blink";
       }, 650);
       return () => {
         clearInterval(interval);
@@ -26,7 +26,7 @@ export default function Terminal(){
 
     const handleKeyDown = (event) => {
       const usrInput = document.getElementById('usr-input');
-      if(event.key == "Enter"){
+      if(event.key === "Enter"){
         event.preventDefault();
         setLog(prevLog => [...prevLog, usrInput.innerHTML]);
         usrInput.innerHTML = '';
