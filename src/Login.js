@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './AuthContext';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const LoginContainer = styled.div`
   display: flex;
@@ -66,15 +66,18 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { login } = useAuth();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = login(username, password);
-    if (success) {
-      navigate('/');
-    } else {
-      setError('Invalid username or password');
+    try {
+      const response = await axios.post('http://127.0.0.1:5000/login', { username, password });
+      if (response.data.status === 'success') {
+        navigate('/');
+      } else {
+        setError('Invalid username or password');
+      }
+    } catch (error) {
+      setError('Error connecting to server');
     }
   };
 
